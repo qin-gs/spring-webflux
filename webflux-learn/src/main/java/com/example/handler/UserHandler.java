@@ -33,8 +33,13 @@ public class UserHandler {
      */
     public Mono<ServerResponse> addUser(ServerRequest request) {
         Mono<User> userMono = request.bodyToMono(User.class);
-        return ok().contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
-                .body(userDao.saveAll(userMono), User.class);
+        return userMono.flatMap(x -> {
+            // 这里进行参数校验，异常通过切面统一处理
+            return ok().contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                    .body(userDao.saveAll(userMono), User.class);
+        });
+        // return ok().contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+        //         .body(userDao.saveAll(userMono), User.class);
     }
 
     /**

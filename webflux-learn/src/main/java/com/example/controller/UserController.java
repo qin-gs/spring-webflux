@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@RestController
-@RequestMapping("/user")
+/**
+ * 传统的路径设置
+ */
+// @RestController
+// @RequestMapping("/user")
 public class UserController {
 
     private final UserDao userDao;
@@ -44,7 +47,7 @@ public class UserController {
     @DeleteMapping("/deleteUser/{id}")
     public Mono<ResponseEntity<Void>> deleteUser(@PathVariable String id) {
         // 操作数据返回 Mono, 使用 flatMap
-        // 需要先查出来，根据情况进行删除会直接返回
+        // 需要先查出来，根据情况进行删除会直返回
         return userDao.findById(id)
                 .flatMap(x -> userDao.delete(x).then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
