@@ -1,1 +1,12 @@
+server:
+  port: 8083
 
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/webflux_learn?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT-8
+    username: root
+    password: root
+
+logging:
+  level:
+    root: info
