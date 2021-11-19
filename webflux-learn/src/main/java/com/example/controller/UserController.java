@@ -12,8 +12,8 @@ import reactor.core.publisher.Mono;
 /**
  * 传统的路径设置
  */
-// @RestController
-// @RequestMapping("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserDao userDao;
@@ -44,7 +44,7 @@ public class UserController {
         return userDao.save(user);
     }
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/deleteUserById/{id}")
     public Mono<ResponseEntity<Void>> deleteUser(@PathVariable String id) {
         // 操作数据返回 Mono, 使用 flatMap
         // 需要先查出来，根据情况进行删除会直返回

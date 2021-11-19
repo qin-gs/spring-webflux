@@ -27,6 +27,16 @@ public class MethodInfo {
      */
     private Mono<?> body;
 
+    /**
+     * 返回 Flux 还是 Mono
+     */
+    private boolean returnFlux;
+
+    /**
+     * 返回对象类型
+     */
+    private Class<?> returnType;
+
     public String getUrl() {
         return url;
     }
@@ -59,6 +69,22 @@ public class MethodInfo {
         this.body = body;
     }
 
+    public boolean isReturnFlux() {
+        return returnFlux;
+    }
+
+    public void setReturnFlux(boolean returnFlux) {
+        this.returnFlux = returnFlux;
+    }
+
+    public Class<?> getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(Class<?> returnType) {
+        this.returnType = returnType;
+    }
+
     @Override
     public String toString() {
         return "MethodInfo{" +
@@ -66,6 +92,8 @@ public class MethodInfo {
                 ", method=" + method +
                 ", params=" + params +
                 ", body=" + body +
+                ", returnFlux=" + returnFlux +
+                ", returnType=" + returnType +
                 '}';
     }
 }

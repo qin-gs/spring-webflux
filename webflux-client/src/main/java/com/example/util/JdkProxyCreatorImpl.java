@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -57,8 +55,19 @@ public class JdkProxyCreatorImpl implements ProxyCreator {
                         MethodInfo info = new MethodInfo();
                         extractUrlAndMethod(method, info);
                         extractParamsAndBody(method, args, info);
+                        extractReturnType(method, info);
                         log.info("MethodInfo: " + info);
                         return info;
+                    }
+
+                    /**
+                     * 得到返回值类型
+                     */
+                    private void extractReturnType(Method method, MethodInfo info) {
+                        boolean isFlux = method.getReturnType().isAssignableFrom(Flux.class);
+                        info.setReturnFlux(isFlux);
+                        Type[] types = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments();
+                        info.setReturnType(((Class<?>) types[0]));
                     }
 
                     /**
