@@ -35,6 +35,6 @@ public interface UserApi {
     /**
      * 添加用户
      */
-    @PostMapping("/")
+    @PostMapping("/insertUser")
     Mono<User> addUser(@RequestBody Mono<User> user);
 }

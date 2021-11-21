@@ -37,6 +37,11 @@ public class MethodInfo {
      */
     private Class<?> returnType;
 
+    /**
+     * requestBody 类型
+     */
+    private Class<?> bodyType;
+
     public String getUrl() {
         return url;
     }
@@ -85,6 +90,14 @@ public class MethodInfo {
         this.returnType = returnType;
     }
 
+    public Class<?> getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(Class<?> bodyType) {
+        this.bodyType = bodyType;
+    }
+
     @Override
     public String toString() {
         return "MethodInfo{" +
@@ -94,6 +107,7 @@ public class MethodInfo {
                 ", body=" + body +
                 ", returnFlux=" + returnFlux +
                 ", returnType=" + returnType +
+                ", bodyType=" + bodyType +
                 '}';
     }
 }

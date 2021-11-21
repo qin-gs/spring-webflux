@@ -38,7 +38,7 @@ public class UserController {
         return userDao.findAll();
     }
 
-    @PostMapping("insertUser")
+    @PostMapping("/insertUser")
     public Mono<User> insertUser(@RequestBody User user) {
         // spring data jpa 新增和修改都是 save，有 id 是修改，没有 id 是新增
         return userDao.save(user);

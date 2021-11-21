@@ -87,6 +87,11 @@ public class JdkProxyCreatorImpl implements ProxyCreator {
                             RequestBody body = parameter.getAnnotation(RequestBody.class);
                             if (Objects.nonNull(body)) {
                                 info.setBody(((Mono<?>) args[i]));
+                                // 请求对象的实际类型
+                                info.setBodyType(
+                                        ((Class<?>) ((ParameterizedType) parameters[0].getParameterizedType())
+                                                .getActualTypeArguments()[0])
+                                );
                             }
                         });
                     }

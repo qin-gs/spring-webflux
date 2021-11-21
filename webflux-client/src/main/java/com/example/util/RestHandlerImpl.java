@@ -2,6 +2,9 @@ package com.example.util;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 public class RestHandlerImpl implements RestHandler {
     private WebClient client;
@@ -19,15 +22,27 @@ public class RestHandlerImpl implements RestHandler {
      */
     @Override
     public Object invokeRest(MethodInfo info) {
-        WebClient.ResponseSpec retrieve = this.client
+        WebClient.RequestBodySpec request = this.client
                 .method(info.getMethod())
                 .uri(info.getUrl(), info.getParams())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve();
-        if (info.isReturnFlux()) {
-            return retrieve.bodyToFlux(info.getReturnType());
+                .accept(MediaType.APPLICATION_JSON);
+
+        WebClient.ResponseSpec retrieve;
+        if (Objects.nonNull(info.getBody())) {
+            retrieve = request.body(info.getBody(), info.getBodyType()).retrieve();
         } else {
-            return retrieve.bodyToMono(info.getReturnType());
+            retrieve = request.retrieve();
         }
+
+        retrieve.onStatus(httpStatus -> httpStatus.value() == 404,
+                clientResponse -> Mono.just(new RuntimeException("Not found")));
+
+        Object result;
+        if (info.isReturnFlux()) {
+            result = retrieve.bodyToFlux(info.getReturnType());
+        } else {
+            result = retrieve.bodyToMono(info.getReturnType());
+        }
+        return result;
     }
 }
