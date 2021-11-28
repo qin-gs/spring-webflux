@@ -3,10 +3,7 @@ package com.example.api;
 import com.example.anno.ApiServer;
 import com.example.bean.User;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -29,7 +26,7 @@ public interface UserApi {
     /**
      * 根据id删除用户
      */
-    @GetMapping("/deleteUserById/{id}")
+    @DeleteMapping("/deleteUserById/{id}")
     Mono<Void> deleteUserById(@PathVariable("id") String id);
 
     /**
@@ -37,4 +34,10 @@ public interface UserApi {
      */
     @PostMapping("/insertUser")
     Mono<User> addUser(@RequestBody Mono<User> user);
+
+    /**
+     * 根据id修改用户
+     */
+    @PostMapping("/updateUser")
+    Mono<User> updateUserById(@RequestBody Mono<User> user);
 }

@@ -5,10 +5,7 @@ import com.example.api.UserApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -109,6 +106,12 @@ public class JdkProxyCreatorImpl implements ProxyCreator {
                                     } else if (x instanceof PostMapping mapping) {
                                         info.setUrl(mapping.value()[0]);
                                         info.setMethod(HttpMethod.POST);
+                                    } else if (x instanceof DeleteMapping mapping) {
+                                        info.setUrl(mapping.value()[0]);
+                                        info.setMethod(HttpMethod.DELETE);
+                                    } else if (x instanceof PutMapping mapping) {
+                                        info.setMethod(HttpMethod.PUT);
+                                        info.setUrl(mapping.value()[0]);
                                     }
                                 });
                     }

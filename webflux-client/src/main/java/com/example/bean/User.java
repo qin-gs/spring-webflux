@@ -6,6 +6,7 @@ public class User {
     private String name;
     private int age;
     private String gender;
+    private String phoneNum;
 
     public User() {
     }
@@ -42,6 +43,14 @@ public class User {
         this.gender = gender;
     }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -49,6 +58,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
                 '}';
     }
 
@@ -58,6 +68,7 @@ public class User {
         private String name;
         private int age;
         private String gender;
+        private String phoneNum;
 
         private UserBuilder() {
         }
@@ -86,12 +97,18 @@ public class User {
             return this;
         }
 
+        public UserBuilder phoneNum(String phoneNum) {
+            this.phoneNum = phoneNum;
+            return this;
+        }
+
         public User build() {
             User user = new User();
             user.setId(id);
             user.setName(name);
             user.setAge(age);
             user.setGender(gender);
+            user.setPhoneNum(phoneNum);
             return user;
         }
     }

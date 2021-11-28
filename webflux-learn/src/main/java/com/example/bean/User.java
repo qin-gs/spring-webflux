@@ -1,6 +1,5 @@
 package com.example.bean;
 
-
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 
@@ -15,6 +14,7 @@ public class User {
     @Range(min = 10, max = 100)
     private int age;
     private String gender;
+    private String phoneNum;
 
     public User() {
     }
@@ -51,6 +51,14 @@ public class User {
         this.gender = gender;
     }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -58,6 +66,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
                 '}';
     }
 }

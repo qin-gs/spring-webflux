@@ -59,6 +59,7 @@ public class UserController {
                 .flatMap(x -> {
                     x.setAge(user.getAge());
                     x.setName(user.getName());
+                    x.setPhoneNum(user.getPhoneNum());
                     return userDao.save(x);
                 })
                 .map(x -> new ResponseEntity<>(x, HttpStatus.OK))
